@@ -1,0 +1,37 @@
+{{ 'soven-roma-bundle.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'soven-roma-bundle.js' | asset_url }}" defer></script>
+<soven-roma-bundle id="soven-roma-bundle" class="roma-bundle" data-currency="{{ cart.currency.iso_code | default: shop.currency }}" data-discount-ready="{{ section.settings.roma_bundle_discount_ready }}" data-discount-code="{{ section.settings.roma_bundle_discount_code | escape }}">
+  <fieldset class="roma-bundle__offers">
+    <legend>Elige tu pack</legend>
+    <label class="roma-bundle__offer">
+      <input type="radio" name="roma-pack-{{ section.id }}" value="single">
+      <span class="roma-bundle__offer-copy"><strong>1 unidad</strong><small>Tu modelo favorito</small></span>
+      <strong data-single-price>{{ current_variant.price | money }}</strong>
+    </label>
+    <label class="roma-bundle__offer roma-bundle__offer--pack">
+      <input type="radio" name="roma-pack-{{ section.id }}" value="bundle" checked>
+      <span class="roma-bundle__offer-copy"><span class="roma-bundle__offer-title"><strong>Paga 2, llévate 3</strong><span class="roma-bundle__discount" data-bundle-discount></span></span><small>Combina tus colores favoritos</small></span>
+
+    </label>
+  </fieldset>
+  <div class="roma-bundle__contents" data-bundle-contents>
+    <div class="roma-bundle__choices">
+      {% for slot in (1..3) %}
+        <div class="roma-bundle__choice">
+          <img data-bundle-image width="64" height="64" alt="">
+          <div>
+            <label for="roma-bundle-{{ section.id }}-{{ slot }}">Gafas {{ slot }}{% if slot == 3 %}<span class="roma-bundle__gift">GRATIS</span>{% endif %}</label>
+            <select id="roma-bundle-{{ section.id }}-{{ slot }}" data-bundle-select aria-label="Elige las gafas {{ slot }}">
+              {% for variant in product.variants %}{% unless variant.option2 contains 'set-' %}<option value="{{ variant.id }}">{{ variant.title | escape }}</option>{% endunless %}{% endfor %}
+            </select>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="roma-bundle__summary">
+      <div><span>Total del pack</span><span><s data-bundle-original></s> <strong data-bundle-total></strong></span></div>
+      <p><span data-bundle-saving></span><span>Envío gratis</span></p>
+    </div>
+  </div>
+  <p class="roma-bundle__error" data-bundle-error role="alert" hidden></p>
+</soven-roma-bundle>

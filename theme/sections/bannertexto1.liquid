@@ -1,0 +1,667 @@
+{% style %}
+  #bannertexto1-{{ section.id }} {
+    width: 100%;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: inherit;
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-top {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: {{ section.settings.column_gap }}px;
+    padding: 0 {{ section.settings.side_padding }}px;
+    align-items: start;
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-brand {
+    margin: 0;
+    font-size: {{ section.settings.brand_size }}px;
+    line-height: 0.95;
+    font-weight: 700;
+    letter-spacing: {{ section.settings.brand_spacing }}px;
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-menu {
+    display: flex;
+    justify-content: center;
+    gap: {{ section.settings.menu_gap }}px;
+    font-size: {{ section.settings.menu_size }}px;
+    line-height: 1.1;
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-menu a,
+  #bannertexto1-{{ section.id }} .bt1-project a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-project {
+    text-align: right;
+    font-size: {{ section.settings.menu_size }}px;
+    line-height: 1.1;
+    text-decoration: underline;
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-description {
+    width: 100%;
+    max-width: none;
+    display: grid;
+    grid-template-columns: 42% 58%;
+    padding: 0 {{ section.settings.side_padding }}px;
+    margin-top: {{ section.settings.description_top }}px;
+    margin-bottom: {{ section.settings.description_bottom }}px;
+    box-sizing: border-box;
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-description p {
+    grid-column: 2;
+    margin: 0;
+    width: 100%;
+    max-width: none;
+    font-size: {{ section.settings.description_size }}px;
+    line-height: {{ section.settings.description_line_height }};
+    letter-spacing: {{ section.settings.description_spacing }}px;
+    font-weight: 500;
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 24px;
+    gap: 20px;
+    padding: 0 {{ section.settings.side_padding }}px {{ section.settings.meta_bottom }}px;
+    font-size: {{ section.settings.meta_size }}px;
+    line-height: 1.1;
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-meta-center {
+    text-align: center;
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-meta-right {
+    text-align: right;
+    color: {{ section.settings.muted_color }};
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-arrow {
+    text-align: right;
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-image-wrap {
+    width: 100%;
+    height: {{ section.settings.image_height }}px;
+    overflow: hidden;
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: {{ section.settings.image_fit }};
+    object-position: {{ section.settings.image_position }};
+  }
+
+  #bannertexto1-{{ section.id }} .bt1-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #eeeeee;
+  }
+
+  @media screen and (max-width: 749px) {
+    #bannertexto1-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    #bannertexto1-{{ section.id }} .bt1-top {
+      grid-template-columns: 1fr;
+      gap: {{ section.settings.column_gap_mobile }}px;
+      padding: 0 {{ section.settings.side_padding_mobile }}px;
+    }
+
+    #bannertexto1-{{ section.id }} .bt1-brand {
+      font-size: {{ section.settings.brand_size_mobile }}px;
+      letter-spacing: {{ section.settings.brand_spacing_mobile }}px;
+    }
+
+    #bannertexto1-{{ section.id }} .bt1-menu {
+      justify-content: flex-start;
+      font-size: {{ section.settings.menu_size_mobile }}px;
+    }
+
+    #bannertexto1-{{ section.id }} .bt1-project {
+      text-align: left;
+      font-size: {{ section.settings.menu_size_mobile }}px;
+    }
+
+    #bannertexto1-{{ section.id }} .bt1-description {
+      display: block;
+      padding: 0 {{ section.settings.side_padding_mobile }}px;
+      margin-top: {{ section.settings.description_top_mobile }}px;
+      margin-bottom: {{ section.settings.description_bottom_mobile }}px;
+    }
+
+    #bannertexto1-{{ section.id }} .bt1-description p {
+      width: 100%;
+      font-size: {{ section.settings.description_size_mobile }}px;
+    }
+
+    #bannertexto1-{{ section.id }} .bt1-meta {
+      grid-template-columns: 1fr;
+      gap: {{ section.settings.meta_gap_mobile }}px;
+      padding: 0 {{ section.settings.side_padding_mobile }}px {{ section.settings.meta_bottom_mobile }}px;
+      font-size: {{ section.settings.meta_size_mobile }}px;
+    }
+
+    #bannertexto1-{{ section.id }} .bt1-meta-center,
+    #bannertexto1-{{ section.id }} .bt1-meta-right,
+    #bannertexto1-{{ section.id }} .bt1-arrow {
+      text-align: left;
+    }
+
+    #bannertexto1-{{ section.id }} .bt1-image-wrap {
+      height: {{ section.settings.image_height_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<section id="bannertexto1-{{ section.id }}">
+  <div class="bt1-top">
+    <h2 class="bt1-brand">{{ section.settings.brand_text }}</h2>
+
+    <nav class="bt1-menu">
+      {% if section.settings.menu_text_1 != blank %}
+        <a href="{{ section.settings.menu_link_1 }}">{{ section.settings.menu_text_1 }}</a>
+      {% endif %}
+      {% if section.settings.menu_text_2 != blank %}
+        <a href="{{ section.settings.menu_link_2 }}">{{ section.settings.menu_text_2 }}</a>
+      {% endif %}
+      {% if section.settings.menu_text_3 != blank %}
+        <a href="{{ section.settings.menu_link_3 }}">{{ section.settings.menu_text_3 }}</a>
+      {% endif %}
+    </nav>
+
+    <div class="bt1-project">
+      <a href="{{ section.settings.project_link }}">{{ section.settings.project_text }}</a>
+    </div>
+  </div>
+
+  <div class="bt1-description">
+    {{ section.settings.description }}
+  </div>
+
+  <div class="bt1-meta">
+    <div>{{ section.settings.meta_left }}</div>
+    <div class="bt1-meta-center">{{ section.settings.meta_center }}</div>
+    <div class="bt1-meta-right">{{ section.settings.meta_right }}</div>
+    <div class="bt1-arrow">{{ section.settings.arrow_text }}</div>
+  </div>
+
+  <div class="bt1-image-wrap">
+    {% if section.settings.image != blank %}
+      {{
+        section.settings.image
+        | image_url: width: 2400
+        | image_tag:
+          class: 'bt1-image',
+          loading: 'lazy',
+          widths: '600, 900, 1200, 1600, 2000, 2400'
+      }}
+    {% else %}
+      <div class="bt1-placeholder"></div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "bannertexto1",
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_text",
+      "label": "Texto grande esquerda",
+      "default": "Ninah Maison"
+    },
+    {
+      "type": "text",
+      "id": "menu_text_1",
+      "label": "Menu 1",
+      "default": "Colección,"
+    },
+    {
+      "type": "url",
+      "id": "menu_link_1",
+      "label": "Link menu 1"
+    },
+    {
+      "type": "text",
+      "id": "menu_text_2",
+      "label": "Menu 2",
+      "default": "Archivo,"
+    },
+    {
+      "type": "url",
+      "id": "menu_link_2",
+      "label": "Link menu 2"
+    },
+    {
+      "type": "text",
+      "id": "menu_text_3",
+      "label": "Menu 3",
+      "default": "Sobre,"
+    },
+    {
+      "type": "url",
+      "id": "menu_link_3",
+      "label": "Link menu 3"
+    },
+    {
+      "type": "text",
+      "id": "project_text",
+      "label": "Texto link direita",
+      "default": "Ver colección"
+    },
+    {
+      "type": "url",
+      "id": "project_link",
+      "label": "Link direita"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Texto principal",
+      "default": "<p>Ninah Maison es una marca de moda femenina que combina elegancia, minimalismo y piezas cuidadosamente seleccionadas para un estilo contemporáneo.</p>"
+    },
+    {
+      "type": "text",
+      "id": "meta_left",
+      "label": "Texto inferior esquerda",
+      "default": "(001)"
+    },
+    {
+      "type": "text",
+      "id": "meta_center",
+      "label": "Texto inferior centro",
+      "default": "Nueva Colección"
+    },
+    {
+      "type": "text",
+      "id": "meta_right",
+      "label": "Texto inferior direita",
+      "default": "Moda Femenina"
+    },
+    {
+      "type": "text",
+      "id": "arrow_text",
+      "label": "Seta",
+      "default": "↗"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagem inferior"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Cor de fundo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Cor textos",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Cor texto secundário",
+      "default": "#777777"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Encaixe da imagem",
+      "default": "cover",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Preencher"
+        },
+        {
+          "value": "contain",
+          "label": "Conter"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Posição da imagem",
+      "default": "center center",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Centro"
+        },
+        {
+          "value": "top center",
+          "label": "Topo"
+        },
+        {
+          "value": "bottom center",
+          "label": "Base"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "brand_size",
+      "label": "Tamanho texto esquerda desktop",
+      "min": 20,
+      "max": 90,
+      "step": 1,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "brand_size_mobile",
+      "label": "Tamanho texto esquerda mobile",
+      "min": 18,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Tamanho texto principal desktop",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "label": "Tamanho texto principal mobile",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "menu_size",
+      "label": "Tamanho menu desktop",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "menu_size_mobile",
+      "label": "Tamanho menu mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "meta_size",
+      "label": "Tamanho textos acima imagem desktop",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "meta_size_mobile",
+      "label": "Tamanho textos acima imagem mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Altura imagem desktop",
+      "min": 250,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "image_height_mobile",
+      "label": "Altura imagem mobile",
+      "min": 200,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "side_padding",
+      "label": "Espaçamento lateral desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "side_padding_mobile",
+      "label": "Espaçamento lateral mobile",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaçamento superior desktop",
+      "min": 0,
+      "max": 180,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaçamento inferior desktop",
+      "min": 0,
+      "max": 180,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaçamento superior mobile",
+      "min": 0,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaçamento inferior mobile",
+      "min": 0,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "description_top",
+      "label": "Espaço acima texto principal desktop",
+      "min": 20,
+      "max": 220,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "description_top_mobile",
+      "label": "Espaço acima texto principal mobile",
+      "min": 10,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "description_bottom",
+      "label": "Espaço abaixo texto principal desktop",
+      "min": 20,
+      "max": 220,
+      "step": 2,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "description_bottom_mobile",
+      "label": "Espaço abaixo texto principal mobile",
+      "min": 10,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "meta_bottom",
+      "label": "Espaço abaixo textos acima imagem",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "meta_bottom_mobile",
+      "label": "Espaço abaixo textos acima imagem mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Espaço colunas desktop",
+      "min": 10,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "Espaço colunas mobile",
+      "min": 8,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "menu_gap",
+      "label": "Espaço entre links do menu",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "meta_gap_mobile",
+      "label": "Espaço textos meta mobile",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "brand_spacing",
+      "label": "Espaçamento letras esquerda desktop",
+      "min": -5,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "default": -1
+    },
+    {
+      "type": "range",
+      "id": "brand_spacing_mobile",
+      "label": "Espaçamento letras esquerda mobile",
+      "min": -5,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "default": -1
+    },
+    {
+      "type": "range",
+      "id": "description_spacing",
+      "label": "Espaçamento letras texto principal",
+      "min": -4,
+      "max": 8,
+      "step": 0.5,
+      "unit": "px",
+      "default": -0.5
+    },
+    {
+      "type": "range",
+      "id": "description_line_height",
+      "label": "Altura linha texto principal",
+      "min": 0.8,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.1
+    }
+  ],
+  "presets": [
+    {
+      "name": "bannertexto1"
+    }
+  ]
+}
+{% endschema %}

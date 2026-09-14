@@ -1,0 +1,445 @@
+{% style %}
+  #banner1-{{ section.id }} {
+    width: 100%;
+    background: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #banner1-{{ section.id }} .banner1-wrapper {
+    width: {{ section.settings.banner_width }}%;
+    max-width: {{ section.settings.banner_max_width }}px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: {{ section.settings.border_radius }}px;
+    position: relative;
+    background: {{ section.settings.image_bg_color }};
+  }
+
+  #banner1-{{ section.id }} .banner1-image {
+    width: 100%;
+    height: {{ section.settings.banner_height_desktop }}px;
+    display: block;
+    object-fit: {{ section.settings.image_fit_desktop }};
+    object-position: {{ section.settings.image_position_desktop }};
+  }
+
+  #banner1-{{ section.id }} .banner1-mobile {
+    display: none;
+  }
+
+  #banner1-{{ section.id }} .banner1-overlay-text {
+    position: absolute;
+    left: {{ section.settings.text_left }}px;
+    bottom: {{ section.settings.text_bottom }}px;
+    z-index: 5;
+    color: {{ section.settings.overlay_text_color }};
+    font-family: inherit;
+    font-size: {{ section.settings.overlay_text_size }}px;
+    line-height: 0.82;
+    font-weight: 900;
+    letter-spacing: {{ section.settings.overlay_text_spacing }}px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  #banner1-{{ section.id }} .banner1-overlay-text p {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    #banner1-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    #banner1-{{ section.id }} .banner1-wrapper {
+      width: {{ section.settings.banner_width_mobile }}%;
+      max-width: 100%;
+      border-radius: {{ section.settings.border_radius_mobile }}px;
+    }
+
+    #banner1-{{ section.id }} .banner1-image {
+      height: {{ section.settings.banner_height_mobile }}px;
+      object-fit: {{ section.settings.image_fit_mobile }};
+      object-position: {{ section.settings.image_position_mobile }};
+    }
+
+    #banner1-{{ section.id }} .banner1-desktop {
+      display: none;
+    }
+
+    #banner1-{{ section.id }} .banner1-mobile {
+      display: block;
+    }
+
+    #banner1-{{ section.id }} .banner1-overlay-text {
+      left: {{ section.settings.text_left_mobile }}px;
+      bottom: {{ section.settings.text_bottom_mobile }}px;
+      font-size: {{ section.settings.overlay_text_size_mobile }}px;
+      letter-spacing: {{ section.settings.overlay_text_spacing_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<section id="banner1-{{ section.id }}">
+  <div class="banner1-wrapper">
+    {% if section.settings.overlay_text != blank %}
+      <div class="banner1-overlay-text">
+        {{ section.settings.overlay_text }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.image_desktop != blank %}
+      {{
+        section.settings.image_desktop
+        | image_url: width: 2400
+        | image_tag:
+          class: 'banner1-image banner1-desktop',
+          loading: 'lazy',
+          widths: '600, 900, 1200, 1600, 2000, 2400'
+      }}
+    {% else %}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'banner1-image banner1-desktop' }}
+    {% endif %}
+
+    {% if section.settings.image_mobile != blank %}
+      {{
+        section.settings.image_mobile
+        | image_url: width: 1200
+        | image_tag:
+          class: 'banner1-image banner1-mobile',
+          loading: 'lazy',
+          widths: '400, 600, 800, 1000, 1200'
+      }}
+    {% elsif section.settings.image_desktop != blank %}
+      {{
+        section.settings.image_desktop
+        | image_url: width: 1200
+        | image_tag:
+          class: 'banner1-image banner1-mobile',
+          loading: 'lazy',
+          widths: '400, 600, 800, 1000, 1200'
+      }}
+    {% else %}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'banner1-image banner1-mobile' }}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "banner1",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Imagem desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Imagem mobile"
+    },
+    {
+      "type": "select",
+      "id": "image_fit_desktop",
+      "label": "Encaixe da imagem desktop",
+      "default": "contain",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Caber inteira sem cortar"
+        },
+        {
+          "value": "cover",
+          "label": "Preencher cortando"
+        },
+        {
+          "value": "fill",
+          "label": "Esticar"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_fit_mobile",
+      "label": "Encaixe da imagem mobile",
+      "default": "contain",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Caber inteira sem cortar"
+        },
+        {
+          "value": "cover",
+          "label": "Preencher cortando"
+        },
+        {
+          "value": "fill",
+          "label": "Esticar"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position_desktop",
+      "label": "Posição da imagem desktop",
+      "default": "center center",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Centro"
+        },
+        {
+          "value": "top center",
+          "label": "Topo"
+        },
+        {
+          "value": "bottom center",
+          "label": "Base"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position_mobile",
+      "label": "Posição da imagem mobile",
+      "default": "center center",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Centro"
+        },
+        {
+          "value": "top center",
+          "label": "Topo"
+        },
+        {
+          "value": "bottom center",
+          "label": "Base"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "image_bg_color",
+      "label": "Cor de fundo da área vazia",
+      "default": "#ffffff"
+    },
+    {
+      "type": "richtext",
+      "id": "overlay_text",
+      "label": "Texto sobre o banner",
+      "default": "<p>Ninah Maison</p>"
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Cor do texto sobre o banner",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "overlay_text_size",
+      "label": "Tamanho texto desktop",
+      "min": 20,
+      "max": 220,
+      "step": 2,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "overlay_text_size_mobile",
+      "label": "Tamanho texto mobile",
+      "min": 20,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 54
+    },
+    {
+      "type": "range",
+      "id": "overlay_text_spacing",
+      "label": "Espaçamento letras desktop",
+      "min": -20,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "default": -8
+    },
+    {
+      "type": "range",
+      "id": "overlay_text_spacing_mobile",
+      "label": "Espaçamento letras mobile",
+      "min": -10,
+      "max": 8,
+      "step": 0.5,
+      "unit": "px",
+      "default": -3
+    },
+    {
+      "type": "range",
+      "id": "text_left",
+      "label": "Distância esquerda desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "text_bottom",
+      "label": "Distância inferior desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "text_left_mobile",
+      "label": "Distância esquerda mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "text_bottom_mobile",
+      "label": "Distância inferior mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Cor de fundo da section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "banner_width",
+      "label": "Largura desktop",
+      "min": 50,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "banner_width_mobile",
+      "label": "Largura mobile",
+      "min": 50,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "banner_max_width",
+      "label": "Largura máxima desktop",
+      "min": 800,
+      "max": 2400,
+      "step": 20,
+      "unit": "px",
+      "default": 1600
+    },
+    {
+      "type": "range",
+      "id": "banner_height_desktop",
+      "label": "Altura desktop",
+      "min": 200,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "banner_height_mobile",
+      "label": "Altura mobile",
+      "min": 200,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Borda arredondada desktop",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "border_radius_mobile",
+      "label": "Borda arredondada mobile",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaçamento superior desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaçamento inferior desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaçamento superior mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaçamento inferior mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "banner1"
+    }
+  ]
+}
+{% endschema %}

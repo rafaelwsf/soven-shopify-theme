@@ -1,0 +1,57 @@
+{% if product.handle == 'men-women-vintage-sunglasses-rectangle-pc-frame-sunglasses-fashion-retro-sun-glasses-luxury-brand-design-shades-eyewear-goggles' %}
+  <section id="soven-roma-lifestyle" class="roma-lifestyle" aria-labelledby="roma-lifestyle-title-{{ section.id }}">
+    <div class="roma-lifestyle__header">
+      <div>
+        <h2 id="roma-lifestyle-title-{{ section.id }}">Así queda el Soven Roma</h2>
+        <p>Imágenes ilustrativas generadas por IA. Las personas no son clientes reales.</p>
+      </div>
+    </div>
+    <div id="roma-lifestyle-track-{{ section.id }}" class="roma-lifestyle__track" tabindex="0" role="region" aria-label="10 fotos ilustrativas del Soven Roma">
+      {% assign scenes = '01-janela,02-varanda,03-espelho,04-cafe,05-quintal,06-passeio,07-sofa,08-parque,09-sacada,10-porta-de-casa' | split: ',' %}
+      {% assign descriptions = 'junto a una ventana,en un balcón,frente a un espejo,en una cafetería,en un patio,durante un paseo,en el sofá,en un parque,en una terraza,en la puerta de casa' | split: ',' %}
+      <div class="roma-lifestyle__belt">
+      {% for copy in (1..2) %}
+      <div class="roma-lifestyle__group" {% if copy == 2 %}aria-hidden="true"{% endif %}>
+      {% for scene in scenes %}
+        <figure class="roma-lifestyle__card" aria-label="Foto {{ forloop.index }} de 10">
+          <img src="{{ 'roma-lifestyle-' | append: scene | append: '.webp' | asset_url }}"
+            alt="Imagen generada por IA: persona con Soven Roma de carey {{ descriptions[forloop.index0] }}"
+            width="744" height="924" loading="lazy" decoding="async">
+        </figure>
+      {% endfor %}
+      </div>
+      {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% stylesheet %}
+  .roma-lifestyle { padding: 32px 38px; background: #fff; color: #111; max-width: 1880px; margin: 0 auto; }
+  .roma-lifestyle__header { margin-bottom: 18px; }
+  .roma-lifestyle h2 { margin: 0 0 8px; font-size: clamp(20px, 2vw, 28px); line-height: 1.15; letter-spacing: -.025em; text-transform: uppercase; }
+  .roma-lifestyle p { margin: 0; font-size: 12px; line-height: 1.6; color: #555; }
+  .roma-lifestyle__track { overflow: hidden; scrollbar-width: none; }
+  .roma-lifestyle__track::-webkit-scrollbar { display: none; }
+  .roma-lifestyle__track:focus-visible { outline: 2px solid #111; outline-offset: 3px; }
+  .roma-lifestyle__belt { display: flex; width: max-content; animation: roma-lifestyle-scroll 65s linear infinite; }
+  .roma-lifestyle__group { display: flex; flex-shrink: 0; gap: 12px; padding-right: 12px; }
+  .roma-lifestyle__card { flex: 0 0 270px; width: 270px; min-width: 0; margin: 0; aspect-ratio: 1856 / 2189; overflow: hidden; }
+  .roma-lifestyle__card img { width: 100%; height: auto; display: block; aspect-ratio: 1856 / 2304; object-fit: contain; background: #f4f4f4; }
+  .roma-lifestyle__track:hover .roma-lifestyle__belt, .roma-lifestyle__track:focus-within .roma-lifestyle__belt { animation-play-state: paused; }
+  @keyframes roma-lifestyle-scroll { to { transform: translateX(-50%); } }
+  @media (max-width: 599px) {
+    .roma-lifestyle { padding: 26px 18px; }
+    .roma-lifestyle__card { flex-basis: 215px; width: 215px; }
+    .roma-lifestyle__header { margin-bottom: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .roma-lifestyle__belt { animation: none; }
+    .roma-lifestyle__track { overflow-x: auto; }
+    .roma-lifestyle__group[aria-hidden="true"] { display: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{ "name": "Soven Roma · Lifestyle", "enabled_on": { "templates": ["product"] }, "settings": [], "presets": [{ "name": "Soven Roma · Lifestyle" }] }
+{% endschema %}

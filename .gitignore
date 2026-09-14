@@ -1,0 +1,10 @@
+# Local generation outputs, review screenshots and large export bundles.
+/artifacts/
+
+# Local credentials and Shopify CLI state.
+.env
+.env.*
+!.env.example
+.shopify/
+node_modules/
+*.log

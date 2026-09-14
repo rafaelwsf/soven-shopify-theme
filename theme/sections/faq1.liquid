@@ -1,0 +1,545 @@
+{% style %}
+  #faq1-{{ section.id }} {
+    width: 100%;
+    background: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #faq1-{{ section.id }} .faq1-title {
+    margin: 0;
+    padding: 0 {{ section.settings.side_padding }}px {{ section.settings.title_bottom }}px;
+    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.title_size }}px;
+    line-height: 0.9;
+    letter-spacing: {{ section.settings.title_letter_spacing }}px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  #faq1-{{ section.id }} .faq1-list {
+    width: 100%;
+    border-top: {{ section.settings.line_width }}px solid {{ section.settings.line_color }};
+  }
+
+  #faq1-{{ section.id }} .faq1-item {
+    border-bottom: {{ section.settings.line_width }}px solid {{ section.settings.line_color }};
+  }
+
+  #faq1-{{ section.id }} .faq1-question {
+    width: 100%;
+    padding: {{ section.settings.item_padding_y }}px {{ section.settings.side_padding }}px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    color: {{ section.settings.question_color }};
+    font-size: {{ section.settings.question_size }}px;
+    line-height: 1.1;
+    letter-spacing: {{ section.settings.question_letter_spacing }}px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  #faq1-{{ section.id }} .faq1-icon {
+    flex: 0 0 auto;
+    font-size: {{ section.settings.icon_size }}px;
+    line-height: 1;
+    transition: transform 0.25s ease;
+  }
+
+  #faq1-{{ section.id }} .faq1-answer {
+    display: none;
+    padding: 0 {{ section.settings.side_padding }}px {{ section.settings.answer_padding_bottom }}px;
+    color: {{ section.settings.answer_color }};
+    font-size: {{ section.settings.answer_size }}px;
+    line-height: {{ section.settings.answer_line_height }};
+    letter-spacing: {{ section.settings.answer_letter_spacing }}px;
+    max-width: {{ section.settings.answer_max_width }}px;
+  }
+
+  #faq1-{{ section.id }} .faq1-item.active .faq1-answer {
+    display: block;
+  }
+
+  #faq1-{{ section.id }} .faq1-item.active .faq1-icon {
+    transform: rotate(45deg);
+  }
+
+  @media screen and (max-width: 749px) {
+    #faq1-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    #faq1-{{ section.id }} .faq1-title {
+      padding-left: {{ section.settings.side_padding_mobile }}px;
+      padding-right: {{ section.settings.side_padding_mobile }}px;
+      padding-bottom: {{ section.settings.title_bottom_mobile }}px;
+      font-size: {{ section.settings.title_size_mobile }}px;
+      letter-spacing: {{ section.settings.title_letter_spacing_mobile }}px;
+    }
+
+    #faq1-{{ section.id }} .faq1-question {
+      padding: {{ section.settings.item_padding_y_mobile }}px {{ section.settings.side_padding_mobile }}px;
+      font-size: {{ section.settings.question_size_mobile }}px;
+      letter-spacing: {{ section.settings.question_letter_spacing_mobile }}px;
+    }
+
+    #faq1-{{ section.id }} .faq1-answer {
+      padding-left: {{ section.settings.side_padding_mobile }}px;
+      padding-right: {{ section.settings.side_padding_mobile }}px;
+      padding-bottom: {{ section.settings.answer_padding_bottom_mobile }}px;
+      font-size: {{ section.settings.answer_size_mobile }}px;
+      letter-spacing: {{ section.settings.answer_letter_spacing_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<section id="faq1-{{ section.id }}">
+  <h2 class="faq1-title">{{ section.settings.title }}</h2>
+
+  <div class="faq1-list">
+    {% for block in section.blocks %}
+      <div class="faq1-item" {{ block.shopify_attributes }}>
+        <button class="faq1-question" type="button" aria-expanded="false">
+          <span>{{ block.settings.question }}</span>
+          <span class="faq1-icon">+</span>
+        </button>
+
+        <div class="faq1-answer">
+          {{ block.settings.answer }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var section = document.querySelector('#faq1-{{ section.id }}');
+    if (!section) return;
+
+    var items = section.querySelectorAll('.faq1-item');
+
+    items.forEach(function (item) {
+      var button = item.querySelector('.faq1-question');
+
+      button.addEventListener('click', function () {
+        var isActive = item.classList.contains('active');
+
+        {% if section.settings.close_others %}
+          items.forEach(function (otherItem) {
+            otherItem.classList.remove('active');
+            var otherButton = otherItem.querySelector('.faq1-question');
+            if (otherButton) otherButton.setAttribute('aria-expanded', 'false');
+          });
+        {% endif %}
+
+        if (!isActive) {
+          item.classList.add('active');
+          button.setAttribute('aria-expanded', 'true');
+        } else {
+          item.classList.remove('active');
+          button.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "faq1",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Preguntas Frecuentes"
+    },
+    {
+      "type": "checkbox",
+      "id": "close_others",
+      "label": "Fechar outras perguntas ao abrir uma",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Cor de fundo",
+      "default": "#f8f5ee"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Cor das linhas",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "line_width",
+      "label": "Espessura das linhas",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Cor do título",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Cor das perguntas",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Cor das respostas",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamanho título desktop",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Tamanho título mobile",
+      "min": 18,
+      "max": 70,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "question_size",
+      "label": "Tamanho perguntas desktop",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "question_size_mobile",
+      "label": "Tamanho perguntas mobile",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "answer_size",
+      "label": "Tamanho respostas desktop",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "answer_size_mobile",
+      "label": "Tamanho respostas mobile",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "title_letter_spacing",
+      "label": "Espaçamento letras título desktop",
+      "min": -3,
+      "max": 8,
+      "step": 0.5,
+      "unit": "px",
+      "default": -1
+    },
+    {
+      "type": "range",
+      "id": "title_letter_spacing_mobile",
+      "label": "Espaçamento letras título mobile",
+      "min": -3,
+      "max": 8,
+      "step": 0.5,
+      "unit": "px",
+      "default": -1
+    },
+    {
+      "type": "range",
+      "id": "question_letter_spacing",
+      "label": "Espaçamento perguntas desktop",
+      "min": -2,
+      "max": 8,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "question_letter_spacing_mobile",
+      "label": "Espaçamento perguntas mobile",
+      "min": -2,
+      "max": 8,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "answer_letter_spacing",
+      "label": "Espaçamento respostas desktop",
+      "min": -2,
+      "max": 6,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "answer_letter_spacing_mobile",
+      "label": "Espaçamento respostas mobile",
+      "min": -2,
+      "max": 6,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "answer_line_height",
+      "label": "Altura da linha respostas",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.4
+    },
+    {
+      "type": "range",
+      "id": "side_padding",
+      "label": "Espaçamento lateral desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "side_padding_mobile",
+      "label": "Espaçamento lateral mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "item_padding_y",
+      "label": "Altura das linhas desktop",
+      "min": 6,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "item_padding_y_mobile",
+      "label": "Altura das linhas mobile",
+      "min": 6,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "title_bottom",
+      "label": "Espaço abaixo do título desktop",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "title_bottom_mobile",
+      "label": "Espaço abaixo do título mobile",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "answer_padding_bottom",
+      "label": "Espaço inferior resposta desktop",
+      "min": 6,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "answer_padding_bottom_mobile",
+      "label": "Espaço inferior resposta mobile",
+      "min": 6,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "answer_max_width",
+      "label": "Largura máxima da resposta",
+      "min": 400,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 900
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Tamanho do ícone",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaçamento superior desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaçamento inferior desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaçamento superior mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaçamento inferior mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Pergunta",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pergunta",
+          "default": "¿Cuánto tarda el envío?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Resposta",
+          "default": "<p>Los pedidos se preparan cuidadosamente y se envían en un plazo estimado de 24 a 48 horas laborables. El tiempo de entrega puede variar según la dirección y el método de envío seleccionado.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "faq1",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuánto tarda el envío?",
+            "answer": "<p>Los pedidos se preparan cuidadosamente y se envían en un plazo estimado de 24 a 48 horas laborables. El tiempo de entrega puede variar según la dirección y el método de envío seleccionado.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Puedo cambiar o devolver una prenda?",
+            "answer": "<p>Sí. Puedes solicitar un cambio o devolución dentro del plazo indicado en nuestra política, siempre que la prenda esté sin usar, con sus etiquetas originales y en perfecto estado.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cómo sé cuál es mi talla?",
+            "answer": "<p>En cada producto encontrarás información de tallaje para ayudarte a elegir mejor. Si dudas entre dos tallas, recomendamos revisar las medidas de la prenda o escribirnos antes de comprar.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Las prendas vuelven a estar disponibles?",
+            "answer": "<p>Algunas piezas pueden volver en reposición, pero muchas colecciones tienen unidades limitadas. Si una prenda te interesa, recomendamos comprarla antes de que se agote.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Qué métodos de pago aceptáis?",
+            "answer": "<p>Aceptamos los principales métodos de pago online, incluyendo tarjeta y otras opciones disponibles en el checkout. Todas las transacciones se procesan de forma segura.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

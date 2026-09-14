@@ -1,0 +1,34 @@
+soven-roma-bundle { display:block; margin:20px 0 26px; color:#171717; font-family:inherit; }
+.roma-bundle__offers { border:0; padding:0; margin:0; min-width:0; }
+.roma-bundle__offers legend { padding:0; margin-bottom:14px; font-size:15px; font-weight:600; }
+.roma-bundle__offer { display:flex; align-items:center; gap:11px; padding:18px 15px; margin-bottom:11px; border:1px solid #deddd9; border-radius:15px; cursor:pointer; font-size:13px; background:#fff; transition:background .18s,border-color .18s,box-shadow .18s; }
+.roma-bundle__offer:hover { border-color:#99968d; }
+.roma-bundle__offer:has(input:checked) { border-color:#222; box-shadow:inset 0 0 0 1px #222,0 3px 12px #00000005; background:#f7f6f2; }
+.roma-bundle__offer:focus-within { outline:2px solid #777; outline-offset:3px; }
+.roma-bundle__offer input { margin:0; width:17px; height:17px; accent-color:#171717; flex-shrink:0; }
+.roma-bundle__offer-copy { flex:1; min-width:0; }
+.roma-bundle__offer strong { font-weight:600; }
+.roma-bundle__offer small { display:block; margin-top:5px; font-size:11px; line-height:1.4; color:#66645f; }
+.roma-bundle__badge { border-radius:20px; padding:6px 8px; background:#222; color:#fff; font-size:9px; font-weight:600; white-space:nowrap; letter-spacing:.035em; }
+.roma-bundle__contents { border:1px solid #e4e2dc; border-radius:16px; padding:17px 14px; background:linear-gradient(145deg,#fff,#faf9f6); }
+.roma-bundle [hidden] { display:none; }
+.roma-bundle__choices { display:grid; gap:15px; }
+.roma-bundle__choice { display:flex; align-items:center; gap:11px; }
+.roma-bundle__choice img { flex:0 0 57px; width:57px; height:57px; border-radius:11px; border:1px solid #e9e7e1; object-fit:contain; background:#fff; }
+.roma-bundle__choice>div { flex:1; min-width:0; }
+.roma-bundle__choice label { display:flex; align-items:center; gap:7px; margin-bottom:6px; font-size:11px; font-weight:600; }
+.roma-bundle__gift { border-radius:9px; background:#eaf0e3; color:#405334; padding:2px 6px; font-size:8px; letter-spacing:.03em; }
+.roma-bundle__choice select { display:block; width:100%; min-width:0; height:38px; padding:6px 24px 6px 10px; border:1px solid #dad8d2; border-radius:9px; background-color:#fff; color:#222; font-family:inherit; font-size:12px; }
+.roma-bundle__choice select:focus-visible { outline:2px solid #555; outline-offset:2px; }
+.roma-bundle__summary { margin-top:18px; padding-top:15px; border-top:1px solid #e4e2db; font-size:12px; }
+.roma-bundle__summary>div,.roma-bundle__summary p { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.roma-bundle__summary s { color:#898780; font-size:11px; margin-right:5px; }
+.roma-bundle__summary strong { font-size:21px; font-weight:600; letter-spacing:-.03em; }
+.roma-bundle__summary p { margin:10px 0 0; color:#4b603d; font-size:11px; }
+.roma-bundle__error { color:#a32626; font-size:12px; margin:10px 0 0; }
+.roma-bundle-active .ip-block:has([data-option-group]),.roma-bundle-active .ip-block:has([data-quantity]) { display:none; }
+@media(max-width:599px) { .roma-bundle__offer { padding:16px 12px; gap:9px; } .roma-bundle__contents { padding:15px 12px; } }
+@media(prefers-reduced-motion:reduce) { .roma-bundle__offer { transition:none; } }
+.roma-bundle__discount { display:inline-flex; align-items:center; justify-content:center; padding:4px 8px; border:1px solid #d2ddc7; border-radius:7px; background:#e9efdf; color:#3a5029; font-size:10px; line-height:1.2; font-weight:700; letter-spacing:.02em; white-space:nowrap; flex-shrink:0; }
+
+.roma-bundle__offer-title { display:flex; align-items:center; flex-wrap:wrap; gap:7px; }

@@ -1,0 +1,17 @@
+<div id="soven-payment-badges" class="soven-payment-badges" aria-label="Métodos de pago con PayPal">
+  <p>Paga con PayPal</p>
+  <ul role="list">
+    {% assign payment_brands = 'paypal,visa,master,american_express,discover,jcb,diners_club' | split: ',' %}
+    {% for brand in payment_brands %}
+      {% if brand == 'discover' and localization.country.iso_code == 'CA' %}{% continue %}{% endif %}
+      <li>{{ brand | payment_type_svg_tag: class: 'soven-payment-badges__icon' }}</li>
+    {% endfor %}
+  </ul>
+</div>
+<style>
+  .soven-payment-badges { width: 100%; margin-top: 20px; margin-bottom: 28px; text-align: center; }
+  .soven-payment-badges p { margin: 0 0 8px; font-size: 12px; line-height: 1.4; color: #555; }
+  .soven-payment-badges ul { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .soven-payment-badges li { display: flex; }
+  .soven-payment-badges__icon { width: 34px; height: 22px; }
+</style>

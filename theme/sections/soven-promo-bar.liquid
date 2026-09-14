@@ -1,0 +1,54 @@
+<aside class="soven-promo" aria-label="Promociones"
+  style="--promo-bg: {{ section.settings.background }}; --promo-fg: {{ section.settings.foreground }}; --promo-duration: {{ section.settings.duration }}s;">
+  <span class="visually-hidden">{{ section.settings.offer | escape }}. {{ section.settings.shipping | escape }}.</span>
+  <div class="soven-promo__viewport" aria-hidden="true">
+    <div class="soven-promo__track">
+      {% for copy in (1..2) %}
+        <div class="soven-promo__group">
+          {% for item in (1..4) %}
+            <span class="soven-promo__message">
+              <strong>{{ section.settings.offer | escape }}</strong>
+              <span class="soven-promo__separator">✦</span>
+              <span>{{ section.settings.shipping | escape }}</span>
+              <span class="soven-promo__separator soven-promo__separator--end">✦</span>
+            </span>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</aside>
+
+{% stylesheet %}
+  .soven-promo { position: relative; width: 100%; overflow: hidden; background: var(--promo-bg); color: var(--promo-fg); font-family: var(--font-body--family, sans-serif); font-size: 12px; letter-spacing: .1em; line-height: 1.4; text-transform: uppercase; }
+  .soven-promo__viewport { overflow: hidden; margin-right: 0; }
+  .soven-promo__track { display: flex; width: max-content; animation: soven-promo-scroll var(--promo-duration) linear infinite; }
+  .soven-promo__group { display: flex; flex-shrink: 0; min-width: 100vw; justify-content: space-around; }
+  .soven-promo__message { display: flex; flex-shrink: 0; align-items: center; gap: 30px; padding: 11px 0 11px 30px; white-space: nowrap; }
+  .soven-promo__message strong { font-weight: 650; }
+  .soven-promo__separator { font-size: 10px; opacity: .75; }
+  @keyframes soven-promo-scroll { to { transform: translateX(-50%); } }
+  @media (max-width: 749px) { .soven-promo { font-size: 11px; } .soven-promo__message { gap: 24px; padding-left: 24px; } }
+  @media (prefers-reduced-motion: reduce) {
+    .soven-promo__track { animation: none; width: 100%; }
+    .soven-promo__viewport { margin-right: 0; }
+    .soven-promo__group { min-width: 100%; width: 100%; }
+    .soven-promo__group + .soven-promo__group, .soven-promo__message + .soven-promo__message, .soven-promo__separator--end { display: none; }
+    .soven-promo__message { flex-shrink: 1; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 11px 12px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Soven · Barra de promoção",
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "text", "id": "offer", "label": "Promoção", "default": "Paga 2, llévate 3" },
+    { "type": "text", "id": "shipping", "label": "Envio", "default": "Envío gratis" },
+    { "type": "color", "id": "background", "label": "Fundo", "default": "#000000" },
+    { "type": "color", "id": "foreground", "label": "Texto", "default": "#ffffff" },
+    { "type": "range", "id": "duration", "label": "Duração da animação", "min": 15, "max": 60, "step": 5, "unit": "s", "default": 30 }
+  ],
+  "presets": [{ "name": "Soven · Barra de promoção" }]
+}
+{% endschema %}

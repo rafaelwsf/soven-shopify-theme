@@ -1,0 +1,715 @@
+{% style %}
+  #rodape1-{{ section.id }} {
+    width: 100%;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding: {{ section.settings.padding_top }}px {{ section.settings.padding_horizontal }}px {{ section.settings.padding_bottom }}px;
+    font-family: inherit;
+    overflow: hidden;
+  }
+
+  #rodape1-{{ section.id }} a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-top {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr 0.8fr 0.8fr;
+    gap: {{ section.settings.column_gap }}px;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-title {
+    margin: 0 0 {{ section.settings.title_margin }}px;
+    font-size: {{ section.settings.title_size }}px;
+    font-weight: 700;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-text {
+    margin: 0 0 {{ section.settings.newsletter_gap }}px;
+    font-size: {{ section.settings.text_size }}px;
+    line-height: 1.3;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-form {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid {{ section.settings.text_color }};
+    max-width: {{ section.settings.form_width }}px;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-input {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    padding: 12px 6px;
+    font-size: {{ section.settings.text_size }}px;
+    color: {{ section.settings.text_color }};
+    outline: none;
+    font-family: inherit;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-input::placeholder {
+    color: {{ section.settings.placeholder_color }};
+  }
+
+  #rodape1-{{ section.id }} .rodape1-button {
+    border: 0;
+    background: transparent;
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.text_size }}px;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 12px 6px;
+    text-transform: uppercase;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-list {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.link_gap }}px;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-link {
+    font-size: {{ section.settings.text_size }}px;
+    line-height: 1.2;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-social {
+    display: flex;
+    justify-content: flex-end;
+    gap: {{ section.settings.social_gap }}px;
+    margin-top: {{ section.settings.social_margin }}px;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-social a {
+    width: {{ section.settings.social_size }}px;
+    height: {{ section.settings.social_size }}px;
+    border-radius: 50%;
+    background: {{ section.settings.social_bg_color }};
+    color: {{ section.settings.social_icon_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-social svg {
+    width: {{ section.settings.social_icon_size }}px;
+    height: {{ section.settings.social_icon_size }}px;
+    display: block;
+    fill: currentColor;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-logo-wrap {
+    width: 100%;
+    overflow: visible;
+    margin-top: {{ section.settings.logo_margin_top }}px;
+    position: relative;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-logo {
+    display: block;
+    width: max-content;
+    max-width: none;
+    white-space: nowrap;
+    font-size: {{ section.settings.logo_size }}px;
+    line-height: 0.82;
+    letter-spacing: {{ section.settings.logo_spacing }}px;
+    font-weight: 900;
+    color: {{ section.settings.logo_color }};
+    transform-origin: left center;
+  }
+
+  #rodape1-{{ section.id }} .rodape1-copyright-symbol {
+    display: inline-block;
+    font-size: {{ section.settings.copyright_size }}%;
+    vertical-align: super;
+    line-height: 0;
+    margin-left: {{ section.settings.copyright_margin_left }}px;
+    margin-right: {{ section.settings.copyright_margin_right }}px;
+    position: relative;
+    top: {{ section.settings.copyright_position_y }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #rodape1-{{ section.id }} {
+      padding: {{ section.settings.padding_top_mobile }}px {{ section.settings.padding_horizontal_mobile }}px {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    #rodape1-{{ section.id }} .rodape1-top {
+      grid-template-columns: 1fr;
+      gap: {{ section.settings.column_gap_mobile }}px;
+    }
+
+    #rodape1-{{ section.id }} .rodape1-title {
+      font-size: {{ section.settings.title_size_mobile }}px;
+    }
+
+    #rodape1-{{ section.id }} .rodape1-text,
+    #rodape1-{{ section.id }} .rodape1-input,
+    #rodape1-{{ section.id }} .rodape1-button,
+    #rodape1-{{ section.id }} .rodape1-link {
+      font-size: {{ section.settings.text_size_mobile }}px;
+    }
+
+    #rodape1-{{ section.id }} .rodape1-form {
+      max-width: 100%;
+    }
+
+    #rodape1-{{ section.id }} .rodape1-social {
+      justify-content: flex-start;
+      margin-top: {{ section.settings.social_margin_mobile }}px;
+    }
+
+    #rodape1-{{ section.id }} .rodape1-logo-wrap {
+      margin-top: {{ section.settings.logo_margin_top_mobile }}px;
+      padding-top: 18px;
+      margin-bottom: -18px;
+    }
+
+    #rodape1-{{ section.id }} .rodape1-logo {
+      font-size: {{ section.settings.logo_size_mobile }}px;
+      letter-spacing: {{ section.settings.logo_spacing_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<footer id="rodape1-{{ section.id }}">
+  <div class="rodape1-top">
+    <div>
+      <h3 class="rodape1-title">{{ section.settings.newsletter_title }}</h3>
+      <p class="rodape1-text">{{ section.settings.newsletter_text }}</p>
+
+      {% form 'customer', class: 'rodape1-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input
+          class="rodape1-input"
+          type="email"
+          name="contact[email]"
+          placeholder="{{ section.settings.email_placeholder }}"
+          required
+        >
+        <button class="rodape1-button" type="submit">
+          {{ section.settings.button_text }}
+        </button>
+      {% endform %}
+    </div>
+
+    <div>
+      <h3 class="rodape1-title">{{ section.settings.col_1_title }}</h3>
+      <div class="rodape1-list">
+        {% for link in linklists[section.settings.menu_1].links %}
+          <a class="rodape1-link" href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div>
+      <h3 class="rodape1-title">{{ section.settings.col_2_title }}</h3>
+      <div class="rodape1-list">
+        {% for link in linklists[section.settings.menu_2].links %}
+          <a class="rodape1-link" href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div>
+      <h3 class="rodape1-title">{{ section.settings.col_3_title }}</h3>
+      <div class="rodape1-list">
+        {% for link in linklists[section.settings.menu_3].links %}
+          <a class="rodape1-link" href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {% if section.settings.show_social %}
+    <div class="rodape1-social">
+      {% if section.settings.instagram_link != blank %}
+        <a href="{{ section.settings.instagram_link }}" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5Zm8.75 2.2a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="rodape1-logo-wrap">
+    <div class="rodape1-logo" data-rodape-logo>
+      {% assign logo_parts = section.settings.big_logo_text | split: '©' %}
+      {% if logo_parts.size > 1 %}
+        {{ logo_parts[0] }}<span class="rodape1-copyright-symbol">©</span>{{ logo_parts[1] }}
+      {% else %}
+        {{ section.settings.big_logo_text }}
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+<script>
+  function resizeRodapeLogo{{ section.id | replace: '-', '' }}() {
+    var section = document.querySelector('#rodape1-{{ section.id }}');
+    if (!section) return;
+
+    var wrap = section.querySelector('.rodape1-logo-wrap');
+    var logo = section.querySelector('[data-rodape-logo]');
+    if (!wrap || !logo) return;
+
+    logo.style.transform = 'scale(1)';
+    logo.style.marginBottom = '0px';
+
+    var wrapWidth = wrap.clientWidth;
+    var logoWidth = logo.scrollWidth;
+
+    if (logoWidth > wrapWidth && logoWidth > 0) {
+      var scale = wrapWidth / logoWidth;
+      logo.style.transform = 'scale(' + scale + ')';
+      logo.style.marginBottom = '-' + ((logo.offsetHeight * (1 - scale)) || 0) + 'px';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', resizeRodapeLogo{{ section.id | replace: '-', '' }});
+  window.addEventListener('resize', resizeRodapeLogo{{ section.id | replace: '-', '' }});
+
+  document.addEventListener('shopify:section:load', function(event) {
+    if (event.detail.sectionId === '{{ section.id }}') {
+      resizeRodapeLogo{{ section.id | replace: '-', '' }}();
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Rodapé1",
+  "settings": [
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Título newsletter",
+      "default": "MANTENTE AL DÍA"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_text",
+      "label": "Texto newsletter",
+      "default": "Suscríbete a nuestros emails y recibe novedades exclusivas."
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Placeholder email",
+      "default": "email@gmail.com"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto botão",
+      "default": "SUSCRIBIRSE"
+    },
+    {
+      "type": "text",
+      "id": "col_1_title",
+      "label": "Título coluna 1",
+      "default": "MARCA"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_1",
+      "label": "Menu coluna 1"
+    },
+    {
+      "type": "text",
+      "id": "col_2_title",
+      "label": "Título coluna 2",
+      "default": "SOPORTE"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "Menu coluna 2"
+    },
+    {
+      "type": "text",
+      "id": "col_3_title",
+      "label": "Título coluna 3",
+      "default": "LEGAL"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_3",
+      "label": "Menu coluna 3"
+    },
+    {
+      "type": "text",
+      "id": "big_logo_text",
+      "label": "Texto grande inferior",
+      "default": "Ninah©maison"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Mostrar Instagram",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "instagram_link",
+      "label": "Link Instagram"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Cor de fundo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Cor dos textos",
+      "default": "#4a261f"
+    },
+    {
+      "type": "color",
+      "id": "logo_color",
+      "label": "Cor texto grande",
+      "default": "#4a261f"
+    },
+    {
+      "type": "color",
+      "id": "placeholder_color",
+      "label": "Cor placeholder",
+      "default": "#cccccc"
+    },
+    {
+      "type": "color",
+      "id": "social_bg_color",
+      "label": "Cor círculo Instagram",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "social_icon_color",
+      "label": "Cor ícone Instagram",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamanho títulos desktop",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Tamanho títulos mobile",
+      "min": 10,
+      "max": 34,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamanho textos desktop",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "label": "Tamanho textos mobile",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "logo_size",
+      "label": "Tamanho texto grande desktop",
+      "min": 80,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 240
+    },
+    {
+      "type": "range",
+      "id": "logo_size_mobile",
+      "label": "Tamanho texto grande mobile",
+      "min": 40,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 74
+    },
+    {
+      "type": "range",
+      "id": "logo_spacing",
+      "label": "Espaçamento texto grande desktop",
+      "min": -40,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "default": -12
+    },
+    {
+      "type": "range",
+      "id": "logo_spacing_mobile",
+      "label": "Espaçamento texto grande mobile",
+      "min": -30,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "default": -6
+    },
+    {
+      "type": "range",
+      "id": "copyright_size",
+      "label": "Tamanho símbolo ©",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "copyright_position_y",
+      "label": "Altura símbolo ©",
+      "min": -80,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": -38
+    },
+    {
+      "type": "range",
+      "id": "copyright_margin_left",
+      "label": "Espaço esquerdo símbolo ©",
+      "min": -40,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "copyright_margin_right",
+      "label": "Espaço direito símbolo ©",
+      "min": -40,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "form_width",
+      "label": "Largura formulário",
+      "min": 200,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaçamento superior desktop",
+      "min": 0,
+      "max": 180,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaçamento inferior desktop",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "label": "Espaçamento lateral desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaçamento superior mobile",
+      "min": 0,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaçamento inferior mobile",
+      "min": 0,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "label": "Espaçamento lateral mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Espaço entre colunas desktop",
+      "min": 20,
+      "max": 180,
+      "step": 2,
+      "unit": "px",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "Espaço entre colunas mobile",
+      "min": 10,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "title_margin",
+      "label": "Espaço abaixo dos títulos",
+      "min": 10,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "newsletter_gap",
+      "label": "Espaço abaixo texto newsletter",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "link_gap",
+      "label": "Espaço entre links",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "social_margin",
+      "label": "Espaço acima Instagram desktop",
+      "min": 20,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "social_margin_mobile",
+      "label": "Espaço acima Instagram mobile",
+      "min": 10,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "social_size",
+      "label": "Tamanho círculo Instagram",
+      "min": 18,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "social_icon_size",
+      "label": "Tamanho ícone Instagram",
+      "min": 10,
+      "max": 34,
+      "step": 1,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "social_gap",
+      "label": "Espaço entre redes",
+      "min": 4,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "logo_margin_top",
+      "label": "Espaço acima texto grande desktop",
+      "min": 20,
+      "max": 180,
+      "step": 2,
+      "unit": "px",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "logo_margin_top_mobile",
+      "label": "Espaço acima texto grande mobile",
+      "min": 10,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rodapé1"
+    }
+  ]
+}
+{% endschema %}
