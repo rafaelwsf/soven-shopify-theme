@@ -4,7 +4,14 @@
 {% endcomment %}
 
 {% liquid
+  assign roma_preview = false
+  assign display_title = product.title
   assign current_variant = product.selected_or_first_available_variant
+  if product.handle == 'men-women-vintage-sunglasses-rectangle-pc-frame-sunglasses-fashion-retro-sun-glasses-luxury-brand-design-shades-eyewear-goggles'
+    assign roma_preview = true
+    assign display_title = 'Soven Roma'
+
+  endif
   assign form_id = 'InformacoesProduto-' | append: section.id
   assign elements_scale_desktop = section.settings.elements_scale_desktop | divided_by: 100.0
   assign elements_scale_mobile = section.settings.elements_scale_mobile | divided_by: 100.0
@@ -541,7 +548,7 @@
   #ip-{{ section.id }} .ip-option--color .ip-option-title,
   #ip-{{ section.id }} .ip-option--color .ip-option-selected {
     color: var(--option-label-color);
-    font-size: clamp(17px, 1.4vw, 22px);
+    font-size: clamp(20px, 1.65vw, 26px);
     font-weight: 400;
     line-height: 1.2;
   }
@@ -550,7 +557,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 12px;
+    gap: 24px;
     padding: 7px;
   }
 
@@ -563,7 +570,7 @@
   }
 
   #ip-{{ section.id }} .ip-option--color .ip-option-button--color {
-    --ip-color-size: 34px;
+    --ip-color-size: 64px;
 
     position: relative;
     display: block;
@@ -595,7 +602,7 @@
   }
 
   #ip-{{ section.id }} .ip-option--color .ip-option-input:checked + .ip-option-button--color {
-    outline: 2px solid #111111;
+    outline: 4px solid #111111;
     outline-offset: 4px;
     background: transparent;
   }
@@ -1344,17 +1351,17 @@
     }
 
     #ip-{{ section.id }} .ip-option--color .ip-option-values {
-      gap: 12px;
+      gap: 20px;
       padding: 6px;
     }
 
     #ip-{{ section.id }} .ip-option--color .ip-option-button--color {
-      --ip-color-size: 32px;
+      --ip-color-size: 42px;
     }
 
     #ip-{{ section.id }} .ip-option--color .ip-option-title,
     #ip-{{ section.id }} .ip-option--color .ip-option-selected {
-      font-size: 16px;
+      font-size: 19px;
     }
 
     #ip-{{ section.id }} .ip-buttons {
@@ -1556,8 +1563,22 @@
         <div
           class="ip-gallery"
           data-gallery
-          aria-label="Galeria de {{ product.title | escape }}"
+          aria-label="Galeria de {{ display_title | escape }}"
         >
+          {% if roma_preview %}
+            {% assign roma_photos = '01-frontal,02-tres-quartos-direita,03-lateral,04-tres-quartos-esquerda' | split: ',' %}
+            {% assign roma_variant_code = current_variant.option2 %}
+            {% assign roma_angles = 'Vista frontal,Vista tres cuartos derecha,Vista lateral,Vista tres cuartos izquierda' | split: ',' %}
+            {% for photo in roma_photos %}
+              <div class="ip-media ip-media--half ip-frame-d-square ip-frame-m-square" data-slide>
+                <img src="{{ 'roma-variant-' | append: roma_variant_code | append: '-' | append: photo | append: '.webp' | asset_url }}"
+                  data-roma-image="{{ forloop.index0 }}" alt="Soven Roma — {{ current_variant.option2 | escape }} — {{ roma_angles[forloop.index0] }}"
+                  width="1600" height="1600"
+                  {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                  style="display:block;width:100%;height:100%;object-fit:contain;background:#fff;">
+              </div>
+            {% endfor %}
+          {% else %}
           {% assign visible_media_count = 0 %}
 
           {% if section.settings.automatic_product_content %}
@@ -1733,6 +1754,7 @@
               </div>
             {% endfor %}
           {% endif %}
+          {% endif %}
         </div>
 
         <div
@@ -1839,11 +1861,11 @@
                   >
                     <h1 class="ip-title">
                       {% if section.settings.automatic_product_content %}
-                        {{ product.title | escape }}
+                        {{ display_title | escape }}
                       {% elsif block.settings.title_source == 'custom' and block.settings.custom_title != blank %}
                         {{ block.settings.custom_title | escape }}
                       {% else %}
-                        {{ product.title | escape }}
+                        {{ display_title | escape }}
                       {% endif %}
                     </h1>
                   </div>
@@ -1951,7 +1973,8 @@
                   </div>
 
                 {% when 'variant_picker' %}
-                  {% unless product.has_only_default_variant %}
+                  {% if roma_preview %}{% render 'soven-roma-bundle', product: product, current_variant: current_variant, section: section %}{% endif %}
+                  {% if product.has_only_default_variant == false %}
                     <div
                       class="
                         ip-block ip-size
@@ -2124,7 +2147,7 @@
                                       for="{{ input_id }}"
                                       title="{{ value | escape }}"
                                       {% if is_color_option %}
-                                        style="{% if color_media != blank %}--ip-color-image: url('{{ color_media | image_url: width: 180 }}');{% elsif value.swatch.color %}--ip-color-fill: rgb({{ value.swatch.color.rgb }});{% endif %}"
+                                        style="{% if roma_preview and color_variant != blank %}--ip-color-image: url('{{ 'roma-variant-' | append: color_variant.option2 | append: '-02-tres-quartos-direita.webp' | asset_url }}');{% elsif color_media != blank %}--ip-color-image: url('{{ color_media | image_url: width: 180 }}');{% elsif value.swatch.color %}--ip-color-fill: rgb({{ value.swatch.color.rgb }});{% endif %}"
                                       {% endif %}
                                     >
                                       {% if is_color_option %}
@@ -2142,10 +2165,7 @@
                         </fieldset>
                       {% endfor %}
                     </div>
-                  {% endunless %}
-
-                {% when 'soven_bundle' %}
-                  {% render 'soven-bundle', block: block, product: product %}
+                  {% endif %}
 
                 {% when 'quantity' %}
                   <div
@@ -2289,6 +2309,8 @@
                     </div>
                   </div>
 
+                  {% render 'soven-payment-badges' %}
+
                 {% when 'custom_text' %}
                   {% if block.settings.text != blank %}
                     <div
@@ -2379,12 +2401,12 @@
                           </summary>
 
                           <div class="ip-accordion-content rte">
-                            {{ product.description }}
+                            {% if roma_preview %}{% render 'soven-roma-description' %}{% else %}{{ product.description }}{% endif %}
                           </div>
                         </details>
                       {% else %}
                         <div class="ip-content rte">
-                          {{ product.description }}
+                          {% if roma_preview %}{% render 'soven-roma-description' %}{% else %}{{ product.description }}{% endif %}
                         </div>
                       {% endif %}
                     </div>
@@ -2536,9 +2558,6 @@
                     </div>
                   {% endif %}
 
-                {% when 'complete_look' %}
-                  {% render 'complete-look', block: block %}
-
                 {% when 'accordion' %}
                   <div
                     class="
@@ -2602,6 +2621,7 @@
       </div>
     </div>
 
+    {% if roma_preview %}{% render 'soven-roma-variant-media' %}{% endif %}
     <script type="application/json" data-variants>
       {{ product.variants | json }}
     </script>
@@ -2770,6 +2790,21 @@
       );
     }
 
+    const romaMediaElement = section.querySelector('[data-roma-variant-media]');
+    const romaMedia = romaMediaElement ? JSON.parse(romaMediaElement.textContent) : {};
+    const romaViews = ['Vista frontal', 'Vista tres cuartos derecha', 'Vista lateral', 'Vista tres cuartos izquierda'];
+    function updateRomaMedia(variant) {
+      const media = romaMedia[variant?.id];
+      if (!media) return;
+      section.querySelectorAll('[data-roma-image]').forEach((image) => {
+        const index = Number(image.dataset.romaImage);
+        image.src = media.images[index];
+        image.alt = 'Soven Roma — ' + media.label + ' — ' + romaViews[index];
+      });
+      if (gallery) gallery.scrollLeft = 0;
+      const selectedLabel = section.querySelector('[data-selected-value="2"]');
+      if (selectedLabel) selectedLabel.textContent = media.label;
+    }
     const variantsElement = section.querySelector('[data-variants]');
     const variantInput = section.querySelector('[data-variant-id]');
     const price = section.querySelector('[data-price]');
@@ -2819,6 +2854,7 @@
     }
 
     function selectedVariant() {
+
       const options = selectedOptions();
 
       return variants.find((variant) =>
@@ -2883,6 +2919,7 @@
       }
 
       if (variantInput) variantInput.value = variant.id;
+      updateRomaMedia(variant);
 
       /* O preço manual é apenas visual e permanece fixo mesmo ao trocar
          de variante. O valor cobrado no carrinho continua sendo o valor
@@ -2915,6 +2952,7 @@
       window.history.replaceState({}, '', url.toString());
 
       showVariantMedia(variant);
+      section.dispatchEvent(new CustomEvent('soven:variant-changed', { detail: variant }));
     }
 
     section.querySelectorAll('[data-option-input]').forEach((input) => {
@@ -3085,6 +3123,9 @@
   "tag": "section",
   "class": "section-informacoesproduto",
   "settings": [
+    { "type": "header", "content": "Bundle Soven Roma" },
+    { "type": "checkbox", "id": "roma_bundle_discount_ready", "label": "Descuento 3x2 configurado en Shopify", "info": "Activa solo después de configurar un descuento que regale la unidad de menor precio al comprar tres variantes individuales del Roma. Excluye los sets.", "default": false },
+    { "type": "text", "id": "roma_bundle_discount_code", "label": "Código de descuento (opcional)", "info": "Déjalo vacío si el descuento es automático." },
     {
       "type": "header",
       "content": "Conteúdo automático do produto"
@@ -9450,116 +9491,6 @@
           "id": "border_color",
           "label": "Cor das linhas",
           "default": "#D8D8D8"
-        }
-      ]
-    },
-    {
-      "type": "complete_look",
-      "name": "Completa tu look",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Título",
-          "default": "COMPLETA TU LOOK"
-        },
-        {
-          "type": "text",
-          "id": "button_label",
-          "label": "Texto del botón",
-          "default": "AÑADIR A LA BOLSA"
-        },
-        {
-          "type": "header",
-          "content": "Producto 1"
-        },
-        {
-          "type": "product",
-          "id": "product_1",
-          "label": "Producto"
-        },
-        {
-          "type": "image_picker",
-          "id": "image_1",
-          "label": "Imagen personalizada"
-        },
-        {
-          "type": "text",
-          "id": "title_1",
-          "label": "Título personalizado"
-        },
-        {
-          "type": "text",
-          "id": "text_1",
-          "label": "Texto adicional"
-        },
-        {
-          "type": "header",
-          "content": "Producto 2"
-        },
-        {
-          "type": "product",
-          "id": "product_2",
-          "label": "Producto"
-        },
-        {
-          "type": "image_picker",
-          "id": "image_2",
-          "label": "Imagen personalizada"
-        },
-        {
-          "type": "text",
-          "id": "title_2",
-          "label": "Título personalizado"
-        },
-        {
-          "type": "text",
-          "id": "text_2",
-          "label": "Texto adicional"
-        },
-        {
-          "type": "header",
-          "content": "Producto 3"
-        },
-        {
-          "type": "product",
-          "id": "product_3",
-          "label": "Producto"
-        },
-        {
-          "type": "image_picker",
-          "id": "image_3",
-          "label": "Imagen personalizada"
-        },
-        {
-          "type": "text",
-          "id": "title_3",
-          "label": "Título personalizado"
-        },
-        {
-          "type": "text",
-          "id": "text_3",
-          "label": "Texto adicional"
-        }
-      ]
-    },
-    {
-      "type": "soven_bundle",
-      "name": "Pack Soven",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Título",
-          "default": "Tu selección Soven"
-        },
-        {
-          "type": "text",
-          "id": "subtitle",
-          "label": "Subtítulo",
-          "default": "Más estilos para cada momento."
         }
       ]
     }
