@@ -107,12 +107,13 @@
         {% assign product = section.settings.collection.products[collection_index] %}
       {% endif %}
 
+      {% assign product_url = '#' %}
+      {% if product != blank %}
+        {% assign product_url = product.url %}
+      {% endif %}
+
       <div class="produtos1-card">
-        {% if product != blank %}
-          <a class="produtos1-link" href="{{ product.url }}">
-        {% else %}
-          <a class="produtos1-link" href="#">
-        {% endif %}
+        <a class="produtos1-link" href="{{ product_url }}">
 
           <div class="produtos1-image-wrap">
             {% if custom_image != blank %}
